@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -21,7 +22,9 @@ const LoginPage = () => {
             <input type="password" name="password" id="password" />
           </div>
 
-          <button className="loginpage__content__form__submit">Dalej</button>
+          <Link to="/login/users" className="loginpage__content__form__submit">
+            Dalej
+          </Link>
         </form>
       </div>
     </section>

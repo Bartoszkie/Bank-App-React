@@ -1,8 +1,11 @@
 import React from "react";
+import { openModalAction } from "../redux/modal/modal.actions";
+import ModalContainer from '../../components/modal/modal-container.component';
 
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-const Header = () => {
+const Header = ({ changeModal }) => {
   return (
     <header className="header">
       <nav className="header__nav__desktop">
@@ -13,15 +16,30 @@ const Header = () => {
           <Link to="/" className="header__nav__desktop__list__item">
             O nas
           </Link>
-          <li className="header__nav__desktop__list__item">Regulamin</li>
-          <li className="header__nav__desktop__list__item">Możliwości</li>
+          <li
+            className="header__nav__desktop__list__item"
+            onClick={changeModal}
+          >
+            Regulamin
+          </li>
+          <li
+            className="header__nav__desktop__list__item"
+            onClick={changeModal}
+          >
+            Możliwości
+          </li>
           <li className="header__nav__desktop__list__item">
             <Link to="/login">Zaloguj</Link>
           </li>
         </ul>
       </nav>
+      <ModalContainer title="Strona w budowie!"></ModalContainer>
     </header>
   );
 };
 
-export default Header;
+const mapDispatchToProps = (dispatch) => ({
+  changeModal: () => dispatch(openModalAction()),
+});
+
+export default connect(null, mapDispatchToProps)(Header);

@@ -10,6 +10,7 @@ import UserPanelPage from "./pages/user-panel-page/user-panel-page.component";
 //COMPONENTS
 import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";
+import ModalContainer from "./components/modal/modal-container.component";
 
 import "./sass/styles.scss";
 
