@@ -18,7 +18,7 @@ const LoginPage = () => {
           </div>
 
           <div className="loginpage__content__form__inputgroup">
-            <label for="password">Hasło: </label>
+            <label htmlFor="password">Hasło: </label>
             <input type="password" name="password" id="password" />
           </div>
 

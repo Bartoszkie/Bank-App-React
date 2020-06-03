@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 
 import { connect } from "react-redux";
 import { openModalAction } from "../../components/redux/modal/modal.actions";
@@ -11,6 +12,7 @@ import { Link } from "react-router-dom";
 const UsersPage = ({ changeModal }) => {
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [users, setUsers] = useState({});
 
   const renderEditModal = () => {
     setEditModal(true);
@@ -21,6 +23,13 @@ const UsersPage = ({ changeModal }) => {
     setAddModal(true);
     changeModal();
   };
+
+  useEffect(() => {
+    axios
+      .get("/users")
+      .then((data) => setUsers(data))
+      .catch((error) => console.log(error));
+  }, []);
 
   return (
     <section className="users">
@@ -33,15 +42,19 @@ const UsersPage = ({ changeModal }) => {
         </div>
 
         <div className="users__content__details">
-          <div className="users__content__select" onClick={renderEditModal}>
+          <div className="users__content__select">
             <div className="users__content__select__allusers">
               <div className="users__content__select__allusers__usercontent">
-                <span className="users__content__select__allusers__usercontent__user">
+                <Link
+                  to="/login/users/userpanel"
+                  className="users__content__select__allusers__usercontent__user"
+                >
                   Emaunel Kak
-                </span>
+                </Link>
                 <span className="users__content__select__allusers__usercontent__user">
                   Data: 12.12.2020
                 </span>
+                <button onClick={renderEditModal}>Edytuj</button>
               </div>{" "}
             </div>
           </div>

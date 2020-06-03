@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const UserForm = () => {
   const [data, setData] = useState({});
@@ -15,6 +16,11 @@ const UserForm = () => {
       ...data,
       [name]: value,
     });
+
+    axios
+      .put("/users", data)
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   };
 
   return (
