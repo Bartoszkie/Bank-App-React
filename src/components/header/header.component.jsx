@@ -10,7 +10,9 @@ const Header = () => {
           <h1 className="header__nav__desktop__header">ING Bank</h1>
         </Link>
         <ul className="header__nav__desktop__list">
-          <li className="header__nav__desktop__list__item">O nas</li>
+          <Link to="/" className="header__nav__desktop__list__item">
+            O nas
+          </Link>
           <li className="header__nav__desktop__list__item">Regulamin</li>
           <li className="header__nav__desktop__list__item">Możliwości</li>
           <li className="header__nav__desktop__list__item">

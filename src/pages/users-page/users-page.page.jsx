@@ -1,5 +1,7 @@
 import React from "react";
 
+import {Link} from 'react-router-dom';
+
 const UsersPage = () => {
   return (
     <section className="users">
@@ -25,8 +27,8 @@ const UsersPage = () => {
                   Data: 12.12.2020
                 </span>
               </a>
-              <a
-                routerLink="userpanel"
+              <Link
+                to="/userpanel"
                 className="users__content__select__allusers__usercontent"
               >
                 <span className="users__content__select__allusers__usercontent__user">
@@ -35,7 +37,7 @@ const UsersPage = () => {
                 <span className="users__content__select__allusers__usercontent__user">
                   Data: 12.12.2020
                 </span>
-              </a>
+              </Link>
               <a
                 routerLink="userpanel"
                 className="users__content__select__allusers__usercontent"
