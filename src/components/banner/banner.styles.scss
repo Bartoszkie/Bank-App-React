@@ -1,0 +1,53 @@
+.banner {
+  width: 100%;
+  // max-width: 1200px;
+  margin: 0rem auto;
+
+  background-image: url(../../assets/img/moutains.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  padding: 10rem 3rem;
+  box-shadow: 0 0 5px #ff6200;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  &__h1 {
+    color: #fff;
+    font-weight: 700;
+    font-size: 4rem;
+
+    @media screen and (max-width: 1000px) {
+      font-size: 2.5rem;
+    }
+
+    @media screen and (max-width: 1000px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__p {
+    padding: 0.5rem 2rem;
+
+    background-color: #ff620060;
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 100;
+    letter-spacing: 1px;
+    padding-bottom: 1rem;
+
+    @media screen and (max-width: 1000px) {
+      font-size: 1.8rem;
+    }
+
+    @media screen and (max-width: 1000px) {
+      font-size: 1rem;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import "./base/variables";
+@import "./base/base-styles";
+
+//PAGE
+@import "../pages/home-page/home-page.styles.scss";
+@import "../pages/login-page/login-page.styles.scss";
+@import "../pages/users-page/users-page.styles.scss";
+
+//COMPONENTS
+@import "../components/header/header.styles.scss";
+@import "../components/footer/footer.styles.scss";
+@import "../components/details/details.styles.scss";
+@import "../components/banner/banner.styles.scss";

@@ -1,0 +1,128 @@
+.loginpage {
+  width: 100%;
+  height: 100%;
+
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+
+    background-image: url(../../assets/img/main_background.jpeg);
+    background-position: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(0.7);
+  }
+
+  &__content {
+    padding: 2.8rem 5rem;
+
+    width: 100%;
+    max-width: 40rem;
+    border-radius: 5px;
+    border: none;
+    background-color: #fff;
+    box-shadow: 0 0 5px #ff6200;
+
+    @media screen and (max-width: 600px) {
+      padding: 2.8rem 2rem;
+    }
+
+    @media screen and (max-width: 456px) {
+      border-radius: 0px;
+    }
+
+    &__info {
+      text-align: center;
+      margin-bottom: 2rem;
+
+      &__heading {
+        font-size: 3rem;
+        font-weight: 400;
+        letter-spacing: 0.1rem;
+
+        @media screen and (max-width: 456px) {
+          font-size: 2.5rem;
+        }
+      }
+
+      &__paragraph {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        font-weight: 100;
+
+        @media screen and (max-width: 456px) {
+          font-size: 0.9rem;
+        }
+      }
+    }
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+
+      &__inputgroup {
+        display: flex;
+        flex-direction: column;
+        margin: 1rem 0;
+
+        & > label {
+          font-size: 1.2rem;
+          font-weight: 100;
+          margin: 0.5rem 0;
+
+          @media screen and (max-width: 456px) {
+            font-size: 1rem;
+          }
+        }
+
+        & > input {
+          font-size: 1rem;
+          padding: 1rem 0.9rem;
+
+          @media screen and (max-width: 456px) {
+            padding: 0.8rem 0.9rem;
+          }
+
+          &:focus {
+            border-color: 1px solid #ff6200;
+          }
+        }
+      }
+
+      &__submit {
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        background-color: #ff6200c5;
+
+        align-self: flex-end;
+
+        cursor: pointer;
+
+        font-weight: 700;
+        font-size: 1.2rem;
+        border: 0;
+        border-radius: 2px;
+        padding: 0.7rem 3rem;
+        margin-top: 1rem;
+
+        @media screen and (max-width: 456px) {
+          padding: 0.6rem 2.4rem;
+        }
+      }
+    }
+  }
+}
