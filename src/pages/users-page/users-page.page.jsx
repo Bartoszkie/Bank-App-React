@@ -4,13 +4,13 @@ import { connect } from "react-redux";
 import { openModalAction } from "../../components/redux/modal/modal.actions";
 import ModalContainer from "../../components/modal/modal-container.component";
 import UserForm from "../../components/user-form/user-form.component";
+import UserFormAdd from "../../components/user-form-add/user-form.component";
 
 import { Link } from "react-router-dom";
 
 const UsersPage = ({ changeModal }) => {
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [userData, setUserData] = useState({});
 
   const renderEditModal = () => {
     setEditModal(true);
@@ -72,7 +72,7 @@ const UsersPage = ({ changeModal }) => {
           changeState={setAddModal}
           title="Dodaj użytkownika"
         >
-          <p>Dodawanie usera</p>
+          <UserFormAdd />
         </ModalContainer>
       ) : null}
     </section>
