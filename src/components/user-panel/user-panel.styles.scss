@@ -1,0 +1,209 @@
+.userpanel {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+
+    background-image: url(../../assets/img/main_background.jpeg);
+    background-position: center;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(0.7);
+  }
+
+  &__resources {
+    background-image: url(../../assets/img/img-noise-361x370.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    margin: 0 5rem;
+
+    width: 100%;
+    max-width: 1200px;
+    max-height: 800px;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 5px #ff6200;
+
+    @media screen and (max-width: 768px) {
+      padding: 2rem 3rem;
+
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media screen and (max-width: 456px) {
+      padding: 1.5rem 1.2rem;
+      max-width: 100%;
+      margin: 0;
+    }
+
+    &__circle {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        background-color: #ff6200;
+        border-radius: 50%;
+
+        padding: 1rem;
+        width: 18rem;
+        height: 18rem;
+
+        position: relative;
+
+        @media screen and (max-width: 1000px) {
+          width: 15rem;
+          height: 15rem;
+        }
+
+        @media screen and (max-width: 850px) {
+          width: 12rem;
+          height: 12rem;
+        }
+
+        &::before {
+          position: absolute;
+          z-index: 1;
+
+          border-radius: 50%;
+
+          content: "";
+          width: 110%;
+          height: 110%;
+
+          background-color: transparent;
+          border: 0.1rem solid #ff6200;
+        }
+
+        &__value {
+          font-size: 1.6rem;
+          color: #fff;
+          font-weight: 700;
+          margin-bottom: 0.6rem;
+        }
+
+        &__account {
+          color: #fff;
+          text-transform: uppercase;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    &__maketransaction {
+      margin: 0 2rem;
+
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &__modal {
+        width: 100%;
+        border: none;
+        outline: none;
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+
+      &__payin {
+        width: 100%;
+        background-image: linear-gradient(to right, #ff620052, #ff6200d0);
+        transition: 0.5s ease-in-out background-image;
+
+        padding: 1rem 2rem;
+        cursor: pointer;
+
+        @media screen and (max-width: 1000px) {
+          padding: 0.5rem 1rem;
+        }
+
+        &:hover {
+          background-image: linear-gradient(to right, #ff6200d0, #ff620052);
+        }
+
+        &:hover &__add {
+          color: #fff;
+        }
+
+        &:hover &__txt {
+          font-weight: 500;
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 0.4rem;
+        }
+
+        display: flex;
+        align-items: center;
+
+        &__add {
+          font-weight: 700;
+          font-size: 2.4rem;
+          color: #ff6200;
+          margin-right: 20px;
+
+          @media screen and (max-width: 1000px) {
+            font-size: 2rem;
+          }
+        }
+
+        &__txt {
+          color: #fff;
+          font-weight: 100;
+          font-size: 2.4rem;
+          text-decoration: none;
+
+          @media screen and (max-width: 1000px) {
+            font-size: 1.8rem;
+          }
+
+          @media screen and (max-width: 456px) {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+
+    .divider {
+      width: 1px;
+      height: 100%;
+
+      background-color: #ff6200;
+
+      @media screen and (max-width: 768px) {
+        margin: 3rem 0;
+
+        width: 100%;
+        height: 1px;
+      }
+    }
+  }
+}

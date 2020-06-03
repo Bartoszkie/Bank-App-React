@@ -5,6 +5,7 @@ import { Route } from "react-router-dom";
 import HomePage from "./pages/home-page/home-page.page";
 import LoginPage from "./pages/login-page/login-page.page";
 import UsersPage from "./pages/users-page/users-page.page";
+import UserPanelPage from "./pages/user-panel-page/user-panel-page.component";
 
 //COMPONENTS
 import Header from "./components/header/header.component";
@@ -18,7 +19,8 @@ const App = () => {
       <Header />
       <Route exact path="/" component={HomePage} />
       <Route exact path="/login" component={LoginPage} />
-      <Route exact path="/login/page" component={UsersPage} />
+      <Route exact path="/login/users" component={UsersPage} />
+      <Route exact path="/login/users/userpanel" component={UserPanelPage} />
       <Footer />
     </div>
   );
