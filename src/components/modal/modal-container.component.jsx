@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { closeModalAction } from "../redux/modal/modal.actions";
 
@@ -10,6 +11,8 @@ const ModalContainer = ({
   state,
   changeState,
 }) => {
+  const history = useHistory();
+
   const stopProp = (e) => {
     e.stopPropagation();
   };
@@ -17,6 +20,7 @@ const ModalContainer = ({
   const passState = () => {
     changeModal();
     changeState(!state);
+    history.push("/login/users");
   };
 
   return (

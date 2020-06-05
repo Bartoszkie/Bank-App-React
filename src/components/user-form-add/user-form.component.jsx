@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 const UserFormAdd = () => {
   const [data, setData] = useState({});
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +18,9 @@ const UserFormAdd = () => {
       .then(() => {
         axios
           .post("/users", data)
-          .then((data) => console.log(data))
+          .then((data) => {
+            history.push("/login/users");
+          })
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
