@@ -1,5 +1,8 @@
-import React from "react";
-import { Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Redirect } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import axios from "axios";
 
 //PAGES
 import HomePage from "./pages/home-page/home-page.page";
@@ -13,13 +16,22 @@ import Footer from "./components/footer/footer.component";
 import ModalContainer from "./components/modal/modal-container.component";
 
 import "./sass/styles.scss";
+import { connect } from "react-redux";
 
-const App = () => {
+const App = ({ loggiedIn }) => {
+  const { pathname } = useLocation();
+
+  console.log(loggiedIn);
+
   return (
     <div className="wrapper">
       <Header />
       <Route exact path="/" component={HomePage} />
-      <Route exact path="/login" component={LoginPage} />
+      {!loggiedIn ? (
+        <Route exact path="/login" component={LoginPage} />
+      ) : loggiedIn && pathname === "/login" ? (
+        <Redirect to="/" />
+      ) : null}
       <Route exact path="/login/users" component={UsersPage} />
       <Route exact path="/login/users/userpanel" component={UserPanelPage} />
       <Footer />
@@ -27,4 +39,8 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  loggiedIn: state.userData.loggiedIn,
+});
+
+export default connect(mapStateToProps)(App);

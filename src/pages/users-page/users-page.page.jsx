@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 import { connect } from "react-redux";
 import { openModalAction } from "../../components/redux/modal/modal.actions";
+import { userSelectedUser } from "../../components/redux/users/users.actions";
 import ModalContainer from "../../components/modal/modal-container.component";
 import UserForm from "../../components/user-form/user-form.component";
 import UserFormAdd from "../../components/user-form-add/user-form.component";
 
 import { Link } from "react-router-dom";
 
-const UsersPage = ({ changeModal }) => {
+const UsersPage = ({ changeModal, usersData, slecetUser }) => {
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [users, setUsers] = useState({});
@@ -26,8 +27,17 @@ const UsersPage = ({ changeModal }) => {
 
   useEffect(() => {
     axios
-      .get("/users")
-      .then((data) => setUsers(data))
+      .get("/users/login", {
+        headers: {
+          Authorization: "Basic " + btoa("user" + ":" + "12345"),
+        },
+      })
+      .then(() => {
+        axios
+          .get("/users")
+          .then((data) => setUsers(data))
+          .catch((error) => console.log(error));
+      })
       .catch((error) => console.log(error));
   }, []);
 
@@ -42,22 +52,31 @@ const UsersPage = ({ changeModal }) => {
         </div>
 
         <div className="users__content__details">
-          <div className="users__content__select">
-            <div className="users__content__select__allusers">
-              <div className="users__content__select__allusers__usercontent">
-                <Link
-                  to="/login/users/userpanel"
-                  className="users__content__select__allusers__usercontent__user"
-                >
-                  Emaunel Kak
-                </Link>
-                <span className="users__content__select__allusers__usercontent__user">
-                  Data: 12.12.2020
-                </span>
-                <button onClick={renderEditModal}>Edytuj</button>
-              </div>{" "}
-            </div>
-          </div>
+          {users.data && users.data.length !== 0 ? (
+            users.data.map((person) => (
+              <div
+                className="users__content__select"
+                onClick={() => slecetUser(person)}
+              >
+                <div className="users__content__select__allusers">
+                  <div className="users__content__select__allusers__usercontent">
+                    <Link
+                      to="/login/users/userpanel"
+                      className="users__content__select__allusers__usercontent__user"
+                    >
+                      {person.username}
+                    </Link>
+                    <span className="users__content__select__allusers__usercontent__user">
+                      Data: 12.12.2020
+                    </span>
+                    <button onClick={renderEditModal}>Edytuj</button>
+                  </div>{" "}
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>No users</p>
+          )}
 
           <div className="users__content__add">
             <p className="users__content__add__heading">Dodaj użytkownika</p>
@@ -94,6 +113,11 @@ const UsersPage = ({ changeModal }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   changeModal: () => dispatch(openModalAction()),
+  slecetUser: (user) => dispatch(userSelectedUser(user)),
 });
 
-export default connect(null, mapDispatchToProps)(UsersPage);
+const mapStateToProps = (state) => ({
+  usersData: state.userData.users,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UsersPage);

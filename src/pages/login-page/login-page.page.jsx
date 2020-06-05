@@ -1,7 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
+import { userLoginAction } from "../../components/redux/users/users.actions";
+
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const LoginPage = ({ loggedin }) => {
+  const [userName, setUsername] = useState("");
+  const [passwordm, setPassword] = useState("");
+
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .get("/users/login", {
+        headers: {
+          Authorization: "Basic " + btoa(userName + ":" + passwordm),
+        },
+      })
+      .then(() => {
+        loggedin();
+        history.push("/login/users");
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleUsername = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+  };
+
+  console.log(userName, passwordm);
+
   return (
     <section className="loginpage">
       <div className="loginpage__content">
@@ -11,24 +48,31 @@ const LoginPage = () => {
             zaloguj się do bankowości internetowej
           </p>
         </div>
-        <form className="loginpage__content__form">
+        <form className="loginpage__content__form" onSubmit={handleSubmit}>
           <div className="loginpage__content__form__inputgroup">
             <label htmlFor="login">Login: </label>
-            <input type="text" />
+            <input onChange={handleUsername} type="text" />
           </div>
 
           <div className="loginpage__content__form__inputgroup">
             <label htmlFor="password">Hasło: </label>
-            <input type="password" name="password" id="password" />
+            <input
+              onChange={handlePassword}
+              type="password"
+              name="password"
+              id="password"
+            />
           </div>
 
-          <Link to="/login/users" className="loginpage__content__form__submit">
-            Dalej
-          </Link>
+          <button className="loginpage__content__form__submit">Dalej</button>
         </form>
       </div>
     </section>
   );
 };
 
-export default LoginPage;
+const mapDispatchToProps = (dispatch) => ({
+  loggedin: () => dispatch(userLoginAction()),
+});
+
+export default connect(null, mapDispatchToProps)(LoginPage);

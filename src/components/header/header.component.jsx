@@ -1,6 +1,6 @@
 import React from "react";
 import { openModalAction } from "../redux/modal/modal.actions";
-import ModalContainer from '../../components/modal/modal-container.component';
+import ModalContainer from "../../components/modal/modal-container.component";
 
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -16,18 +16,8 @@ const Header = ({ changeModal }) => {
           <Link to="/" className="header__nav__desktop__list__item">
             O nas
           </Link>
-          <li
-            className="header__nav__desktop__list__item"
-            onClick={changeModal}
-          >
-            Regulamin
-          </li>
-          <li
-            className="header__nav__desktop__list__item"
-            onClick={changeModal}
-          >
-            Możliwości
-          </li>
+          <li className="header__nav__desktop__list__item">Regulamin</li>
+          <li className="header__nav__desktop__list__item">Możliwości</li>
           <li className="header__nav__desktop__list__item">
             <Link to="/login">Zaloguj</Link>
           </li>

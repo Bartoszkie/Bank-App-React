@@ -6,6 +6,20 @@ const UserForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    axios
+      .get("/users/login", {
+        headers: {
+          Authorization: "Basic " + btoa("user" + ":" + "12345"),
+        },
+      })
+      .then(() => {
+        axios
+          .patch(`/users`, data)
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleChange = (e) => {
@@ -16,18 +30,11 @@ const UserForm = () => {
       ...data,
       [name]: value,
     });
-
-    axios
-      .put("/users", data)
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
   };
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>
-      <input onChange={handleChange} name="email" type="text" />
-      <input onChange={handleChange} name="adress" type="text" />
-      <input onChange={handleChange} name="syf" type="text" />
+      <input onChange={handleChange} name="password" type="text" />
       <button className="user-form__submit">Edytuj</button>
     </form>
   );
