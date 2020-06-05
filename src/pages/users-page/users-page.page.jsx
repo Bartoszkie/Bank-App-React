@@ -4,13 +4,14 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { openModalAction } from "../../components/redux/modal/modal.actions";
 import { userSelectedUser } from "../../components/redux/users/users.actions";
+import { getUsersFromBackend } from "../../components/redux/users/users.getUsers";
 import ModalContainer from "../../components/modal/modal-container.component";
 import UserForm from "../../components/user-form/user-form.component";
 import UserFormAdd from "../../components/user-form-add/user-form.component";
 
 import { Link } from "react-router-dom";
 
-const UsersPage = ({ changeModal, usersData, slecetUser }) => {
+const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [users, setUsers] = useState({});
@@ -25,7 +26,24 @@ const UsersPage = ({ changeModal, usersData, slecetUser }) => {
     changeModal();
   };
 
+  const deleteUser = (username) => {
+    axios
+      .get("/users/", {
+        headers: {
+          Authorization: "Basic " + btoa("user" + ":" + "12345"),
+        },
+      })
+      .then(() => {
+        axios
+          .delete(`/users/${username}`)
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
+  };
+
   useEffect(() => {
+    setUsers(usersData);
     axios
       .get("/users/login", {
         headers: {
@@ -53,10 +71,11 @@ const UsersPage = ({ changeModal, usersData, slecetUser }) => {
 
         <div className="users__content__details">
           {users.data && users.data.length !== 0 ? (
-            users.data.map((person) => (
+            users.data.map((person, index) => (
               <div
                 className="users__content__select"
                 onClick={() => slecetUser(person)}
+                key={index}
               >
                 <div className="users__content__select__allusers">
                   <div className="users__content__select__allusers__usercontent">
@@ -64,12 +83,25 @@ const UsersPage = ({ changeModal, usersData, slecetUser }) => {
                       to="/login/users/userpanel"
                       className="users__content__select__allusers__usercontent__user"
                     >
-                      {person.username}
+                      {index === 0 ? (
+                        <p>PRACOWNIK: {person.username} </p>
+                      ) : (
+                        person.username
+                      )}
                     </Link>
-                    <span className="users__content__select__allusers__usercontent__user">
-                      Data: 12.12.2020
-                    </span>
-                    <button onClick={renderEditModal}>Edytuj</button>
+                    <div>
+                      {index === 0 ? null : (
+                        <React.Fragment>
+                          <button
+                            style={{ marginRight: "10px" }}
+                            onClick={() => deleteUser(person.username)}
+                          >
+                            Usuń
+                          </button>
+                          <button onClick={renderEditModal}>Edytuj</button>
+                        </React.Fragment>
+                      )}
+                    </div>
                   </div>{" "}
                 </div>
               </div>

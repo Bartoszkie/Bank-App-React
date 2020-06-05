@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   loggiedIn: false,
   users: [],
   selectedUser: [],
+  amout: [], 
 };
 
 const UserReducer = (state = INITIAL_STATE, action) => {

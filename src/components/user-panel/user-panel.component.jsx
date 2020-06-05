@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+import MakeTransactionBeetweenUsers from "../maketransaction/make-transaction.component";
+
 import ModalContainer from "../modal/modal-container.component";
 import MakeTranasction from "../make-transaction/make-transaction.component";
 import { connect } from "react-redux";
@@ -127,12 +129,7 @@ const UserPanel = ({ changeModal, usersData }) => {
           state={makeTransactionModal}
           changeState={setMakeTransactionModal}
         >
-          <MakeTranasction
-            user={usersData.selectedUser.username}
-            wypłata={false}
-            wpłata={false}
-            makeTransaction={true}
-          />
+          <MakeTransactionBeetweenUsers />
         </ModalContainer>
       ) : null}
     </section>
