@@ -55,10 +55,15 @@ const MakeTransactionBeetweenUsers = ({ currentUsername }) => {
   return (
     <form className="user-form" onSubmit={handleSubmit}>
       <input onChange={handleChange} name="amount" type="number" />
+      <p style={{ textAlign: "center", borderBottom: "1px solid black", paddingBottom: "1rem"}}>Wybierz odbiorcę: </p>
       {users.data &&
         users.data.length !== 0 &&
         users.data.map((item, index) => (
-          <div key={index} onClick={() => setClicked(item.username)}>
+          <div
+            className="user-form__usertotransfer"
+            key={index}
+            onClick={() => setClicked(item.username)}
+          >
             {item.username}
           </div>
         ))}

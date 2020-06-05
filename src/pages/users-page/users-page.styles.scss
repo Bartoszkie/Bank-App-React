@@ -114,8 +114,10 @@
           align-items: center;
   
           &__usercontent {
+            & > a {
             text-decoration: none;
             color: #000;
+            }
   
             width: 100%;
             max-width: 400px;
