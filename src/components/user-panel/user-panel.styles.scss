@@ -53,6 +53,8 @@
       height: 30px;
       border-radius: 50%;
       border: 1px solid #ff6200;
+      cursor: pointer;
+      outline: none;
 
       @media screen and (max-width: 456px)  {
         top: 20px;
