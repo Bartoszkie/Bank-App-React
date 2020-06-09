@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
 
+
   position: relative;
 
   &::before {
@@ -38,6 +39,26 @@
     display: flex;
     justify-content: center;
     box-shadow: 0 0 5px #ff6200;
+    position: relative;
+
+    &__close {
+      position: absolute;
+      top: 20px; 
+      right: 20px;
+
+      background-color: #ff6200;
+      color: #fff;
+
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid #ff6200;
+
+      @media screen and (max-width: 456px)  {
+        top: 20px;
+        right: 30px;
+      }
+    }
 
     @media screen and (max-width: 768px) {
       padding: 2rem 3rem;

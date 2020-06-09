@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import MakeTransactionBeetweenUsers from "../maketransaction/make-transaction.component";
@@ -14,6 +15,8 @@ const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
   const [payOutModal, setPayOutModal] = useState(false);
   const [makeTransactionModal, setMakeTransactionModal] = useState(false);
   const [userDetails, setUserDetails] = useState({});
+
+  const history = useHistory();
 
   const payInRender = () => {
     setpayinModal(true);
@@ -54,11 +57,16 @@ const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log("amount:", usersAmount);
+  const returnToUsers = () => {
+    history.push("/login/users");
+  };
 
   return (
     <section className="userpanel">
       <div className="userpanel__resources">
+        <button className="userpanel__resources__close" onClick={returnToUsers}>
+          &larr;
+        </button>
         <div className="userpanel__resources__circle">
           <div className="userpanel__resources__circle__content">
             <p className="userpanel__resources__circle__content__value">
