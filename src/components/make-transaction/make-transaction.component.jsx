@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from "react";
 
+import { closeModalAction } from "../redux/modal/modal.actions";
 import { updateUserAmount } from "../redux/users/users.actions";
 import axios from "axios";
 import { connect } from "react-redux";
 
-const MakeTransaction = ({ wypłata, wpłata, user, setAmount, usersData }) => {
+const MakeTransaction = ({
+  wypłata,
+  wpłata,
+  user,
+  setAmount,
+  usersData,
+  changeModal,
+}) => {
   const [data, setData] = useState({});
   const [getData, setGetData] = useState({});
 
@@ -30,6 +38,9 @@ const MakeTransaction = ({ wypłata, wpłata, user, setAmount, usersData }) => {
                 .get(`/accounts/${usersData.selectedUser.username}/balance`)
                 .then((data) => {
                   setAmount(data.data);
+                })
+                .then(() => {
+                  changeModal();
                 })
                 .catch((error) => console.log(error));
             })
@@ -57,6 +68,9 @@ const MakeTransaction = ({ wypłata, wpłata, user, setAmount, usersData }) => {
                   setAmount(data.data);
                 })
                 .catch((error) => console.log(error));
+            })
+            .then(() => {
+              changeModal();
             })
             .catch((error) => console.log(error));
         })
@@ -91,6 +105,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setAmount: (value) => dispatch(updateUserAmount(value)),
+  changeModal: () => dispatch(closeModalAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MakeTransaction);
