@@ -89,7 +89,7 @@
         justify-items: center;
         align-items: center;
   
-        border-right: 1px solid #ff6200;
+        // border-right: 1px solid #ff6200;
         padding-right: 2rem;
   
         @media screen and (max-width: 768px) {
@@ -121,14 +121,15 @@
   
             width: 100%;
             max-width: 400px;
-            padding: .2rem .5rem;
+            padding: .6rem .5rem;
             margin: .5rem 0;
   
+            background-color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
   
-            border: 1px solid black;
+            border: 1px solid #ff6200;
             cursor: pointer;
   
             &__user {
@@ -182,3 +183,10 @@
     }
   }
   
+
+  .button__delete {
+    background-color: rgba(231, 15, 15, 0.822);
+    color: #fff;
+    padding: 3px 5px;
+    border: 1px solid #ff6200;
+  }

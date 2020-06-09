@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   loggiedIn: false,
   users: [],
   selectedUser: [],
-  amout: [], 
+  amout: 0,
 };
 
 const UserReducer = (state = INITIAL_STATE, action) => {
@@ -13,6 +13,11 @@ const UserReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         users: action.payload,
+      };
+    case UserActionTypes.UPDATE_USER_AMOUNT:
+      return {
+        ...state,
+        amout: action.payload,
       };
     case UserActionTypes.SELECT_USER:
       return {

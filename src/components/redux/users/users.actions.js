@@ -5,6 +5,11 @@ export const setUsersFromBackend = (users) => ({
   payload: users,
 });
 
+export const updateUserAmount = (amount) => ({
+  type: UserActionTypes.UPDATE_USER_AMOUNT,
+  payload: amount,
+});
+
 export const userLoginAction = () => ({
   type: UserActionTypes.USER_LOGIN,
 });

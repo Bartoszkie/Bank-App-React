@@ -3,15 +3,24 @@ import axios from "axios";
 
 import { connect } from "react-redux";
 import { openModalAction } from "../../components/redux/modal/modal.actions";
-import { userSelectedUser } from "../../components/redux/users/users.actions";
-import { getUsersFromBackend } from "../../components/redux/users/users.getUsers";
+import {
+  userSelectedUser,
+  setUsersFromBackend,
+} from "../../components/redux/users/users.actions";
+// import { getUsersFromBackend } from "../../components/redux/users/users.getUsers";
 import ModalContainer from "../../components/modal/modal-container.component";
 import UserForm from "../../components/user-form/user-form.component";
 import UserFormAdd from "../../components/user-form-add/user-form.component";
 
 import { Link } from "react-router-dom";
 
-const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
+const UsersPage = ({
+  changeModal,
+  usersData,
+  slecetUser,
+  getUsers,
+  setUsersToStore,
+}) => {
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [users, setUsers] = useState({});
@@ -37,23 +46,38 @@ const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
         axios
           .delete(`/users/${username}`)
           .then((data) => console.log(data))
+          .then(() => {
+            axios
+              .get("/users")
+              .then((data) => {
+                setUsersToStore(data);
+              })
+              .catch((error) => console.log(error));
+          })
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    setUsers(usersData);
+    // setUsers(usersData);
+    const getUserName = window.localStorage.getItem("access_token_username");
+    const getUserPasswrod = window.localStorage.getItem(
+      "access_token_password"
+    );
     axios
       .get("/users/login", {
         headers: {
-          Authorization: "Basic " + btoa("user" + ":" + "12345"),
+          Authorization: "Basic " + btoa(getUserName + ":" + getUserPasswrod),
         },
       })
       .then(() => {
         axios
           .get("/users")
-          .then((data) => setUsers(data))
+          .then((data) => {
+            setUsers(data);
+            setUsersToStore(data);
+          })
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
@@ -70,8 +94,8 @@ const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
         </div>
 
         <div className="users__content__details">
-          {users.data && users.data.length !== 0 ? (
-            users.data.map((person, index) => (
+          {usersData && usersData.data && usersData.data.length !== 0 ? (
+            usersData.data.map((person, index) => (
               <div
                 className="users__content__select"
                 onClick={() => slecetUser(person)}
@@ -93,12 +117,13 @@ const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
                       {index === 0 ? null : (
                         <React.Fragment>
                           <button
-                            style={{ marginRight: "10px" }}
+                            // style={{ marginRight: "10px" }}
                             onClick={() => deleteUser(person.username)}
+                            className="button__delete"
                           >
                             Usuń
                           </button>
-                          <button onClick={renderEditModal}>Edytuj</button>
+                          {/* <button onClick={renderEditModal}>Edytuj</button> */}
                         </React.Fragment>
                       )}
                     </div>
@@ -146,6 +171,7 @@ const UsersPage = ({ changeModal, usersData, slecetUser, getUsers }) => {
 const mapDispatchToProps = (dispatch) => ({
   changeModal: () => dispatch(openModalAction()),
   slecetUser: (user) => dispatch(userSelectedUser(user)),
+  setUsersToStore: (users) => dispatch(setUsersFromBackend(users)),
 });
 
 const mapStateToProps = (state) => ({

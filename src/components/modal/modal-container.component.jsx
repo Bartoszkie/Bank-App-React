@@ -20,7 +20,6 @@ const ModalContainer = ({
   const passState = () => {
     changeModal();
     changeState(!state);
-    history.push("/login/users");
   };
 
   return (

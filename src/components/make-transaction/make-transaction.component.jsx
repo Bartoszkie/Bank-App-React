@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
+import { updateUserAmount } from "../redux/users/users.actions";
 import axios from "axios";
+import { connect } from "react-redux";
 
-const MakeTransaction = ({ wypłata, wpłata, user }) => {
+const MakeTransaction = ({ wypłata, wpłata, user, setAmount, usersData }) => {
   const [data, setData] = useState({});
   const [getData, setGetData] = useState({});
 
@@ -23,6 +25,14 @@ const MakeTransaction = ({ wypłata, wpłata, user }) => {
               toUsername: `${user}`,
             })
             .then((data) => console.log(data))
+            .then(() => {
+              axios
+                .get(`/accounts/${usersData.selectedUser.username}/balance`)
+                .then((data) => {
+                  setAmount(data.data);
+                })
+                .catch((error) => console.log(error));
+            })
             .catch((error) => console.log(error));
         })
         .catch((error) => console.log(error));
@@ -40,6 +50,14 @@ const MakeTransaction = ({ wypłata, wpłata, user }) => {
               toUsername: `${user}`,
             })
             .then((data) => console.log(data))
+            .then(() => {
+              axios
+                .get(`/accounts/${usersData.selectedUser.username}/balance`)
+                .then((data) => {
+                  setAmount(data.data);
+                })
+                .catch((error) => console.log(error));
+            })
             .catch((error) => console.log(error));
         })
         .catch((error) => console.log(error));
@@ -67,4 +85,12 @@ const MakeTransaction = ({ wypłata, wpłata, user }) => {
   );
 };
 
-export default MakeTransaction;
+const mapStateToProps = (state) => ({
+  usersData: state.userData,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setAmount: (value) => dispatch(updateUserAmount(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MakeTransaction);

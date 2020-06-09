@@ -5,8 +5,7 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 import { userLoginAction } from "../../components/redux/users/users.actions";
-
-import { Link } from "react-router-dom";
+// import { userLoginAction } from "../../components/redux/login/login.utils";
 
 const LoginPage = ({ loggedin }) => {
   const [userName, setUsername] = useState("");
@@ -16,14 +15,20 @@ const LoginPage = ({ loggedin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // userLoginAction(userName, passwordm);
     axios
       .get("/users/login", {
         headers: {
           Authorization: "Basic " + btoa(userName + ":" + passwordm),
         },
       })
-      .then(() => {
+      .then((data) => {
         loggedin();
+        const acces_token_username = userName;
+        const acces_token_password = passwordm;
+        window.localStorage.setItem("access_token_username", acces_token_username);
+        window.localStorage.setItem("access_token_password", acces_token_password);
+        console.log(data);
         history.push("/login/users");
       })
       .catch((error) => console.log(error));
@@ -38,6 +43,7 @@ const LoginPage = ({ loggedin }) => {
   };
 
   console.log(userName, passwordm);
+  console.log(window.localStorage.getItem("access_token_username"));
 
   return (
     <section className="loginpage">

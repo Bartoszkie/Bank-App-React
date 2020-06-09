@@ -7,8 +7,9 @@ import ModalContainer from "../modal/modal-container.component";
 import MakeTranasction from "../make-transaction/make-transaction.component";
 import { connect } from "react-redux";
 import { openModalAction } from "../redux/modal/modal.actions";
+import { updateUserAmount } from "../redux/users/users.actions";
 
-const UserPanel = ({ changeModal, usersData }) => {
+const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
   const [payinModal, setpayinModal] = useState(false);
   const [payOutModal, setPayOutModal] = useState(false);
   const [makeTransactionModal, setMakeTransactionModal] = useState(false);
@@ -30,22 +31,30 @@ const UserPanel = ({ changeModal, usersData }) => {
   };
 
   useEffect(() => {
+    const getUserName = window.localStorage.getItem("access_token_username");
+    const getUserPasswrod = window.localStorage.getItem(
+      "access_token_password"
+    );
+
     axios
       .get("/users/login", {
         headers: {
-          Authorization: "Basic " + btoa("user" + ":" + "12345"),
+          Authorization: "Basic " + btoa(getUserName + ":" + getUserPasswrod),
         },
       })
       .then(() => {
         axios
           .get(`/accounts/${usersData.selectedUser.username}/balance`)
-          .then((data) => setUserDetails(data))
+          .then((data) => {
+            setUserDetails(data);
+            setAmount(data.data);
+          })
           .catch((error) => console.log(error));
       })
       .catch((error) => console.log(error));
   }, []);
 
-  console.log("amount:", userDetails.data);
+  console.log("amount:", usersAmount);
 
   return (
     <section className="userpanel">
@@ -53,7 +62,7 @@ const UserPanel = ({ changeModal, usersData }) => {
         <div className="userpanel__resources__circle">
           <div className="userpanel__resources__circle__content">
             <p className="userpanel__resources__circle__content__value">
-              {userDetails.data}
+              {usersAmount}
               zł
             </p>
             <p className="userpanel__resources__circle__content__account">
@@ -138,10 +147,12 @@ const UserPanel = ({ changeModal, usersData }) => {
 
 const mapStateToProps = (state) => ({
   usersData: state.userData,
+  usersAmount: state.userData.amout,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeModal: () => dispatch(openModalAction()),
+  setAmount: (value) => dispatch(updateUserAmount(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserPanel);
