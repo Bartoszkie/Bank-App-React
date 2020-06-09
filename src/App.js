@@ -25,7 +25,7 @@ const App = ({ loggiedIn }) => {
 
   return (
     <div className="wrapper">
-      <Header />
+      <Header loggiedIn={loggiedIn} />
       <Route exact path="/" component={HomePage} />
       {!loggiedIn ? (
         <Route exact path="/login" component={LoginPage} />

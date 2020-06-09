@@ -26,7 +26,13 @@ const UserReducer = (state = INITIAL_STATE, action) => {
       };
     case UserActionTypes.USER_LOGIN:
       return {
+        ...state,
         loggiedIn: true,
+      };
+    case UserActionTypes.USER_LOG_OUT:
+      return {
+        ...state,
+        loggiedIn: false,
       };
     case UserActionTypes.POST_USER:
       return {

@@ -5,6 +5,10 @@ export const setUsersFromBackend = (users) => ({
   payload: users,
 });
 
+export const userLogOut = () => ({
+  type: UserActionTypes.USER_LOG_OUT,
+});
+
 export const updateUserAmount = (amount) => ({
   type: UserActionTypes.UPDATE_USER_AMOUNT,
   payload: amount,
