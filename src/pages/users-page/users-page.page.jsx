@@ -24,6 +24,7 @@ const UsersPage = ({
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [users, setUsers] = useState({});
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   const renderEditModal = () => {
     setEditModal(true);
@@ -83,6 +84,46 @@ const UsersPage = ({
       .catch((error) => console.log(error));
   }, []);
 
+  const filterUserData = () => {
+    if (usersData && usersData.data && usersData.data.length !== 0) {
+      const filtered = usersData.data.filter(
+        (user) => user.username !== "user"
+      );
+      return filtered && filtered.length !== 0 ? (
+        filtered.map((person, index) => (
+          <div
+            className="users__content__select"
+            onClick={() => slecetUser(person)}
+            key={index}
+          >
+            <div className="users__content__select__allusers">
+              <div className="users__content__select__allusers__usercontent">
+                <Link
+                  to="/login/users/userpanel"
+                  className="users__content__select__allusers__usercontent__user"
+                >
+                  {person.username}
+                </Link>
+                <div>
+                  <button
+                    onClick={() => deleteUser(person.username)}
+                    className="button__delete"
+                  >
+                    Usuń
+                  </button>
+                </div>
+              </div>{" "}
+            </div>
+          </div>
+        ))
+      ) : (
+        <p>No users</p>
+      );
+    }
+  };
+
+  console.log("this is usersData: ", filterUserData());
+
   return (
     <section className="users">
       <div className="users__content">
@@ -94,47 +135,7 @@ const UsersPage = ({
         </div>
 
         <div className="users__content__details">
-          {usersData && usersData.data && usersData.data.length !== 0 ? (
-            usersData.data.map((person, index) => (
-              <div
-                className="users__content__select"
-                onClick={() => slecetUser(person)}
-                key={index}
-              >
-                <div className="users__content__select__allusers">
-                  <div className="users__content__select__allusers__usercontent">
-                    <Link
-                      to="/login/users/userpanel"
-                      className="users__content__select__allusers__usercontent__user"
-                    >
-                      {index === 0 ? (
-                        <p>PRACOWNIK: {person.username} </p>
-                      ) : (
-                        person.username
-                      )}
-                    </Link>
-                    <div>
-                      {index === 0 ? null : (
-                        <React.Fragment>
-                          <button
-                            // style={{ marginRight: "10px" }}
-                            onClick={() => deleteUser(person.username)}
-                            className="button__delete"
-                          >
-                            Usuń
-                          </button>
-                          {/* <button onClick={renderEditModal}>Edytuj</button> */}
-                        </React.Fragment>
-                      )}
-                    </div>
-                  </div>{" "}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p>No users</p>
-          )}
-
+          {filterUserData()}
           <div className="users__content__add">
             <p className="users__content__add__heading">Dodaj użytkownika</p>
             <button

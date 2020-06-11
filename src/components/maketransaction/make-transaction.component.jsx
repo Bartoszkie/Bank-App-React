@@ -14,7 +14,7 @@ const MakeTransactionBeetweenUsers = ({
   const [data, setData] = useState([]);
   const [clicked, setClicked] = useState([]);
 
-  console.log(changeModal)
+  console.log(changeModal);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,6 +64,29 @@ const MakeTransactionBeetweenUsers = ({
       .catch((error) => console.log(error));
   }, []);
 
+  const filterUserData = () => {
+    if (users && users.data && users.data.length !== 0) {
+      const filtered = users.data.filter(
+        (user) =>
+          user.username !== "user" &&
+          user.username !== currentUsername.selectedUser.username
+      );
+      return filtered && filtered.length !== 0 ? (
+        filtered.map((person, index) => (
+          <div
+            className="user-form__usertotransfer"
+            key={index}
+            onClick={() => setClicked(person.username)}
+          >
+            {person.username}
+          </div>
+        ))
+      ) : (
+        <p>No users</p>
+      );
+    }
+  };
+
   return (
     <form className="user-form" onSubmit={handleSubmit}>
       <input onChange={handleChange} name="amount" type="number" />
@@ -76,17 +99,7 @@ const MakeTransactionBeetweenUsers = ({
       >
         Wybierz odbiorcę:{" "}
       </p>
-      {users.data &&
-        users.data.length !== 0 &&
-        users.data.map((item, index) => (
-          <div
-            className="user-form__usertotransfer"
-            key={index}
-            onClick={() => setClicked(item.username)}
-          >
-            {item.username}
-          </div>
-        ))}
+      {filterUserData()}
       <button className="user-form__submit">Wykonaj</button>
     </form>
   );
