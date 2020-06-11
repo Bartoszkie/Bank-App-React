@@ -12,7 +12,32 @@ import ModalContainer from "../../components/modal/modal-container.component";
 import UserForm from "../../components/user-form/user-form.component";
 import UserFormAdd from "../../components/user-form-add/user-form.component";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { Link } from "react-router-dom";
+
+const notifyError = () =>
+  toast.error("Błąd operacji!", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const notifySuccess = () =>
+  toast.success("Operacja wykonana pomyślnie!", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 const UsersPage = ({
   changeModal,
@@ -52,10 +77,11 @@ const UsersPage = ({
               .get("/users")
               .then((data) => {
                 setUsersToStore(data);
+                notifySuccess();
               })
               .catch((error) => console.log(error));
           })
-          .catch((error) => console.log(error));
+          .catch((error) => notifyError());
       })
       .catch((error) => console.log(error));
   };
@@ -122,7 +148,7 @@ const UsersPage = ({
     }
   };
 
-  console.log("this is usersData: ", filterUserData());
+  // console.log("this is usersData: ", filterUserData());
 
   return (
     <section className="users">
@@ -162,9 +188,23 @@ const UsersPage = ({
           changeState={setAddModal}
           title="Dodaj użytkownika"
         >
-          <UserFormAdd />
+          <UserFormAdd
+            notifyError={notifyError}
+            notifySuccess={notifySuccess}
+          />
         </ModalContainer>
       ) : null}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </section>
   );
 };

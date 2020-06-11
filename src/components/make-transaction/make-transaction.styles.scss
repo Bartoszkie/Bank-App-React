@@ -31,6 +31,11 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
   transition: 0.2s ease-in-out all;
 
+  &:focus, &:active {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
   &:hover {
     color: #fff;
     background-color: rgba(0, 0, 0, 0.9);

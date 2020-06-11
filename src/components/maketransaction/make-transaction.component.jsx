@@ -9,6 +9,8 @@ const MakeTransactionBeetweenUsers = ({
   setAmount,
   usersData,
   changeModal,
+  notifyError,
+  notifySuccess,
 }) => {
   const [users, setUser] = useState([]);
   const [data, setData] = useState([]);
@@ -37,11 +39,14 @@ const MakeTransactionBeetweenUsers = ({
               .get(`/accounts/${usersData.selectedUser.username}/balance`)
               .then((data) => {
                 setAmount(data.data);
+                notifySuccess();
+                changeModal();
               })
-              .catch((error) => console.log(error));
+              .catch((error) => notifyError());
           })
-          .catch((error) => console.log(error));
-      });
+          .catch((error) => notifyError());
+      })
+      .catch(() => notifyError());
   };
 
   const handleChange = (e) => {

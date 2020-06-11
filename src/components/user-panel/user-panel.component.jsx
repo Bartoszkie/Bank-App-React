@@ -9,6 +9,30 @@ import MakeTranasction from "../make-transaction/make-transaction.component";
 import { connect } from "react-redux";
 import { openModalAction } from "../redux/modal/modal.actions";
 import { updateUserAmount } from "../redux/users/users.actions";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const notifyError = () =>
+  toast.error("Błąd operacji!", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+
+const notifySuccess = () =>
+  toast.success("Operacja wykonana pomyślnie!", {
+    position: "bottom-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
 
 const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
   const [payinModal, setpayinModal] = useState(false);
@@ -124,6 +148,8 @@ const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
       {payinModal ? (
         <ModalContainer state={payinModal} changeState={setpayinModal}>
           <MakeTranasction
+            notifyError={notifyError}
+            notifySuccess={notifySuccess}
             user={usersData.selectedUser.username}
             wypłata={false}
             wpłata={true}
@@ -134,6 +160,8 @@ const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
       {payOutModal ? (
         <ModalContainer state={payOutModal} changeState={setPayOutModal}>
           <MakeTranasction
+            notifyError={notifyError}
+            notifySuccess={notifySuccess}
             user={usersData.selectedUser.username}
             wypłata={true}
             wpłata={false}
@@ -146,9 +174,23 @@ const UserPanel = ({ changeModal, usersData, usersAmount, setAmount }) => {
           state={makeTransactionModal}
           changeState={setMakeTransactionModal}
         >
-          <MakeTransactionBeetweenUsers />
+          <MakeTransactionBeetweenUsers
+            notifyError={notifyError}
+            notifySuccess={notifySuccess}
+          />
         </ModalContainer>
       ) : null}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </section>
   );
 };

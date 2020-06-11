@@ -12,6 +12,8 @@ const MakeTransaction = ({
   setAmount,
   usersData,
   changeModal,
+  notifyError,
+  notifySuccess,
 }) => {
   const [data, setData] = useState({});
   const [getData, setGetData] = useState({});
@@ -38,11 +40,12 @@ const MakeTransaction = ({
                 .get(`/accounts/${usersData.selectedUser.username}/balance`)
                 .then((data) => {
                   setAmount(data.data);
+                  notifySuccess();
                 })
                 .then(() => {
                   changeModal();
                 })
-                .catch((error) => console.log(error));
+                .catch((error) => notifyError());
             })
             .catch((error) => console.log(error));
         })
@@ -66,13 +69,14 @@ const MakeTransaction = ({
                 .get(`/accounts/${usersData.selectedUser.username}/balance`)
                 .then((data) => {
                   setAmount(data.data);
+                  notifySuccess();
                 })
                 .catch((error) => console.log(error));
             })
             .then(() => {
               changeModal();
             })
-            .catch((error) => console.log(error));
+            .catch((error) => notifyError());
         })
         .catch((error) => console.log(error));
     }

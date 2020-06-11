@@ -5,8 +5,14 @@ import { connect } from "react-redux";
 import { setUsersFromBackend } from "../redux/users/users.actions";
 import { closeModalAction } from "../redux/modal/modal.actions";
 
-const UserFormAdd = ({ setUsersToStore, changeModal }) => {
+const UserFormAdd = ({
+  setUsersToStore,
+  changeModal,
+  notifySuccess,
+  notifyError,
+}) => {
   const [data, setData] = useState({});
+  const [error, setError] = useState(false);
   const history = useHistory();
 
   const handleSubmit = (e) => {
@@ -35,13 +41,18 @@ const UserFormAdd = ({ setUsersToStore, changeModal }) => {
               .then((data) => {
                 setUsersToStore(data);
               })
-              .catch((error) => console.log(error));
-          }).then(() => {
+              .then(() => console.log("poszlo"))
+              .catch((error) => setError(true));
+          })
+          .then(() => {
+            notifySuccess();
             changeModal();
           })
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            notifyError();
+          });
       })
-      .catch((error) => console.log(error));
+      .catch((error) => setError(true));
   };
 
   const handleChange = (e) => {
@@ -53,6 +64,8 @@ const UserFormAdd = ({ setUsersToStore, changeModal }) => {
       [name]: value,
     });
   };
+
+  console.log("this is error: ", error);
 
   return (
     <form className="user-form" onSubmit={handleSubmit}>
